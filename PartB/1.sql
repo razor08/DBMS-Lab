@@ -67,9 +67,9 @@ dbms_output.put_line('Accno: '|| v_cc3.accno || ' SSN: '||v_cc3.ssn||' Code: '||
 end loop;
 close cc3;
 
-update account a
+update account5 a
 set a.balance = (a.balance + a.balance * 0.1) 
-where a.ssn = "01";
+where a.accno = 'A01';
 
 dbms_output.put_line('Updated Number of rows: '|| sql%rowcount);
 
