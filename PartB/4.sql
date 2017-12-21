@@ -1,26 +1,36 @@
+drop table salary5;
+
 set serveroutput on;
 
+create table salary5 (ssn varchar(20), deptNo varchar(20), pay varchar(20), primary key(ssn));
+create table salary6 (ssn varchar(20), deptNo varchar(20), pay varchar(20), primary key(ssn));
+insert into salary5 values('S01', 'D01', 1000);
+insert into salary5 values('S02', 'D01', 2000);
+insert into salary5 values('S03', 'D02', 3000);
+insert into salary5 values('S04', 'D01', 4000);
+insert into salary5 values('S05', 'D03', 5000);
+insert into salary5 values('S06', 'D04', 6000);
+insert into salary5 values('S07', 'D04', 7000);
+
 DECLARE
-n number:=10;
-a number:=0;
-b number:=1;
-c number;
-i number;
+
+cursor cc1 is
+select * from salary5;
+v_cc1 cc1%rowtype;
+
 BEGIN
-dbms_output.put_line('Fibonacci Series: ');
-dbms_output.put_line(a);
-dbms_output.put_line(b);
 
-for i in 2..n
+update salary5 set pay = pay * 1.15 where deptNo = 'D01';
+
+open cc1;
 loop
-
-c:= a+b;
-dbms_output.put_line(c);
-a:=b;
-b:=c;
-
-
+fetch cc1 into v_cc1;
+exit when cc1%notfound;
+insert into salary6 values(v_cc1.ssn, v_cc1.deptNo, v_cc1.pay);
 end loop;
+close cc1;
 
 end;
 /
+
+select * from salary6;
